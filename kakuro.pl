@@ -2,8 +2,6 @@
 %%%%user interaction%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-
 output :-
     board(X),
     writeBoardLineByLine(X).
@@ -11,7 +9,7 @@ output :-
 writeBoardLineByLine([]).
 writeBoardLineByLine([FirstRow|Rest]) :-
     writeCellByCell(FirstRow),
-    nl,
+    write('|'),nl,
     writeBoardLineByLine(Rest).
 
 writeCellByCell([]).
@@ -19,10 +17,12 @@ writeCellByCell([Head|Rest]) :-
     Head = control(Index1, Index2) -> hintsList(X),
     index(X, Index1, 1, Sum1),
     index(X, Index2, 1, Sum2),
-    write('|'),write(Sum1),write('\\'),write(Sum2);
-    write('| '),write(Head),write(' |'),
+    write('|'),write(Sum1),write('\\'),write(Sum2),
+    writeCellByCell(Rest);
+    write('|__'),write(Head),write('__'),
     writeCellByCell(Rest).
 
+solve :- checkHints, output.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%  saving input board %%%%%
@@ -59,10 +59,9 @@ hint([Sum|Indices]) :-
     isSet(Indices).
 
 %Next two procedures checks if all invariants given by hints hold
-checkHints(X) :-
+checkHints:-
     hintsList(X),
-    X = [First|Rest],
-    hint(First),
+    X = [_|Rest],   %first field of hintsList is a placeholder for incomplete control cells
     checkRestOfHints(Rest).
 checkRestOfHints([]).
 checkRestOfHints([First|Rest]):-
