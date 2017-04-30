@@ -2,9 +2,11 @@
 %%%%user interaction%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
+%+IndexOfProblem, +X - Board and its index to be printed
 output(IndexOfProblem,X) :-
     writeBoardLineByLine(IndexOfProblem,X).
-
+    
+%following methods only format board output
 writeBoardLineByLine(_,[]).
 writeBoardLineByLine(IndexOfProblem,[FirstRow|Rest]) :-
     writeCellByCell(IndexOfProblem,FirstRow),
@@ -35,7 +37,7 @@ hints(1,[[oo],[13,[2,2],[3,2]],[9,[2,3],[3,3]],[17,[2,2],[2,3]],[5,[3,2],[3,3]]]
 hints(solved1,[[oo],[13,[2,2],[3,2]],[9,[2,3],[3,3]],[17,[2,2],[2,3]],[5,[3,2],[3,3]]]).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%% AI itself %%%%%%%%%%
+%%%%%%%% "AI" itself %%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 fillBoardWithNumbers(Index, Board) :-
@@ -51,14 +53,12 @@ fillListWithNumbers([Head|Rest]) :-
     fillListWithNumbers(Rest).
 
 solve(IndexOfProblem, Board) :-
-    checkAllInvariants(IndexOfProblem, Board),
+    checkHints(IndexOfProblem, Board),
     output(IndexOfProblem, Board).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%% checking invariants %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-checkAllInvariants(IndexOfProblem, Board) :- checkHints(IndexOfProblem, Board).
 
 %Sum - hints of kakuro, Indices are tuples indexing to board
 hint(Board, [Sum|Indices]) :-
@@ -106,6 +106,7 @@ isSet(List) :-
   length(Set, Length),
   length(List, Length).
 
+%Used for substitution of numbers to cells 
 substituteNumber(1).
 substituteNumber(2).
 substituteNumber(3).
