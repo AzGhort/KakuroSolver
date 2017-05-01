@@ -21,7 +21,7 @@ hints(Index, [[oo],[Sum1,[X1, Y1],[X2,Y2],...] [Sum2,...]...]), where:
 - SumN is N-th sum, where N is index used in control cells
 - following tuples are indices to board that must fill the Sum
 
-*for the kakuro_heuristic*  
+**_for the kakuro_heuristic_**  
 You also have to save the hintsFreeCells(Index, List), because this version fills the board hint by hint, not in a straight-forward way.   
 List has the following format: [[Sum1, _, _,...],[Sum2,...],...] where:  
 - SumN is the N-th sum, same as in hints  
