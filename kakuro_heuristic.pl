@@ -161,6 +161,7 @@ isSet(List) :-
   length(List, Length).
 
 %Used for substitution of numbers to cells
+%Written in that order, the substitution should be greedy - always use greatest number possible.
 substituteNumber(9).
 substituteNumber(8).
 substituteNumber(7).
