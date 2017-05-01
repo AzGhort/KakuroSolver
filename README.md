@@ -25,7 +25,9 @@ List has the following format: [[Sum1, _, _,...],[Sum2,...],...] where:
 - SumN is the N-th sum, same as in hints  
 - instead of tuples of coordinates to board, there are free variables (that are later inserted to board)  
 
-Example usage:   
+Example usage: 
+
+```
 ?- kakuro(4,_).  
 |__o__|__o__|__o__|05\oo|08\oo|__o__|__o__|__o__|  
 |__o__|14\oo|05\06|__4__|__2__|22\oo|__o__|__o__|  
@@ -37,3 +39,4 @@ Example usage:
 |__o__|__o__|oo\22|__9__|__6__|__1__|__4__|__2__|   
 |__o__|__o__|__o__|oo\09|__7__|__2__|__o__|__o__|  
 true .  
+```
