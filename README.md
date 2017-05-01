@@ -6,8 +6,8 @@ School project, implementing Kakuro Solver in Prolog..
 "kakuro_heuristic.pl" is hopefully final version, or at least it's very close to it.
 
 
-**Format of games for kakuro_brute_force and kakuro_heuristic:**
-*edit - it's pretty slow, so this version is only working for like 3x3 kakuro*
+**Format of games for kakuro_brute_force and kakuro_heuristic:**  
+*edit - it's pretty slow, so this version is only working for like 3x3 kakuro*  
 
 All possible games are "saved" in predicates "kakuro(Number, Board)" where Number is a unique index to hints(List) and 
 Board is a given kakuro board with cells in following format:   
@@ -21,8 +21,8 @@ hints(Index, [[oo],[Sum1,[X1, Y1],[X2,Y2],...] [Sum2,...]...]), where:
 - SumN is N-th sum, where N is index used in control cells
 - following tuples are indices to board that must fill the Sum
 
-*for the kakuro_heuristic*
-You also have to save the hintsFreeCells(Index, List), because this version fills the board hint by hint, not in a straight-forward way. 
-List has the following format: [[Sum1, _, _,...],[Sum2,...],...] where:
-- SumN is the N-th sum, same as in hints
-- instead of tuples of coordinates to board, there are free variables (that are later inserted to board)
+*for the kakuro_heuristic*  
+You also have to save the hintsFreeCells(Index, List), because this version fills the board hint by hint, not in a straight-forward way.   
+List has the following format: [[Sum1, _, _,...],[Sum2,...],...] where:  
+- SumN is the N-th sum, same as in hints  
+- instead of tuples of coordinates to board, there are free variables (that are later inserted to board)  
