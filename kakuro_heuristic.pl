@@ -4,7 +4,7 @@
 
 %+IndexOfProblem, +X - Board and its index to be printed
 output(IndexOfProblem,X) :-
-    writeBoardLineByLine(IndexOfProblem,X).
+    writeBoardLineByLine(IndexOfProblem,X),!.
 
 %following methods only format board output
 writeBoardLineByLine(_,[]).
@@ -66,7 +66,7 @@ fillHintsWithNumbers(IndexOfProblem, Board) :-
     hintsFreeCells(IndexOfProblem, List),
     hints(IndexOfProblem, [_|Hints]),
     fillHints(List, Hints, Board, NewBoard),
-    solve(IndexOfProblem, NewBoard).
+    output(IndexOfProblem, NewBoard).
 
 %recursively fills in hints, one by one
 fillHints([], _, Board, Board).
@@ -105,46 +105,6 @@ fillRestHints(Sum, IncompleteSum, CompleteHint,[NextElement|Rest], [[I, J]|RestH
     insertToMatrix(NextElement, Board, CurBoard, I, J),
     fillRestHints(Sum, NewSum, [CompleteHint,NextElement], Rest, RestHint, CurBoard, NewBoard)).
 
-%final method, checks all invariants and prints output
-solve(IndexOfProblem, Board) :-
-    checkHints(IndexOfProblem, Board),
-    output(IndexOfProblem, Board).
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%% checking invariants %%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Sum - hints of kakuro, Indices are tuples indexing to board
-hint(Board, [Sum|Indices]) :-
-    getSumOfIndices(Board,Indices,Value),
-    Sum is Value,
-    getListFromIndices(Board, Indices, List),
-    isSet(List).
-
-%Next two procedures checks if all invariants given by hints hold
-checkHints(IndexOfProblem, Board):-
-    hints(IndexOfProblem, X),
-    X = [_|Rest],   %first field of hintsList is a placeholder for incomplete control cells
-    checkRestOfHints(Board, Rest).
-checkRestOfHints(_,[]).
-checkRestOfHints(Board,[First|Rest]):-
-    hint(Board, First),
-    checkRestOfHints(Board,Rest).
-
-%+Indices, +LastValue, -Value
-%Returns sum of values on the given indices of board
-getSumOfIndices(Plan, Indices, Value) :-
-    Indices = [[I, J]|Rest],
-    index(Plan, I, J, FirstValue),
-    getSumOfIndices(Plan,Rest, FirstValue, Value).
-
-getSumOfIndices(_,[],X, X).
-getSumOfIndices(Plan, Indices, LastValue,Value) :-
-    Indices = [[I, J]|Rest],
-    index(Plan, I, J, IndexedValue),
-    NewValue is LastValue + IndexedValue,
-    getSumOfIndices(Plan,Rest,NewValue,Value).
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% auxiliary methods %%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -154,14 +114,7 @@ index(Matrix, Row, Col, Value):-
   nth1(Row, Matrix, MatrixRow),
   nth1(Col, MatrixRow, Value).
 
-%+List - determines, if a list contains no duplicate values
-isSet(List) :-
-  setof(X, member(X, List), Set),
-  length(Set, Length),
-  length(List, Length).
-
 %Used for substitution of numbers to cells
-%Written in that order, the substitution should be greedy - always use greatest number possible.
 substituteNumber(9).
 substituteNumber(8).
 substituteNumber(7).
@@ -171,17 +124,6 @@ substituteNumber(4).
 substituteNumber(3).
 substituteNumber(2).
 substituteNumber(1).
-
-% +Indices, +Board, -List get a list of values at given indices of Board
-getListFromIndices(Board, Indices, List) :-
-    getListFromIndices(Board, Indices, [], UnflattenedList),
-    flatten(UnflattenedList, List).
-
-getListFromIndices(_, [], List, List).
-getListFromIndices(Board, Indices, List, NewList):-
-    Indices = [[Row,Column]|Rest],
-    index(Board, Row, Column, Value),
-    getListFromIndices(Board, Rest,[List,Value], NewList).
 
 %Insert Value to Matrix at indices X, Y
 % the insertto predicate handles the Matrix as if saved by columns, not
