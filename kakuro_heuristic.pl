@@ -4,7 +4,7 @@
 
 %+IndexOfProblem, +X - Board and its index to be printed
 output(IndexOfProblem,X) :-
-    writeBoardLineByLine(IndexOfProblem,X),!.
+    writeBoardLineByLine(IndexOfProblem,X).
 
 %following methods only format board output
 writeBoardLineByLine(_,[]).
